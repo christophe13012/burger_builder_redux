@@ -1,3 +1,3 @@
 export const ADD_INGREDIENT = "ADD_INGREDIENT";
 export const SUP_INGREDIENT = "SUP_INGREDIENT";
-export const ERASE_INGREDIENTS = "ERASE_INGREDIENTS";
+export const ADD_ORDER = "ADD_ORDER";

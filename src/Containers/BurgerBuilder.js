@@ -3,7 +3,7 @@ import Burger from "./Burger/Burger";
 import Board from "./Board";
 import ModalComponent from "../Components/ModalComponent";
 import { connect } from "react-redux";
-import { eraseIngredients } from "./../Store/actions";
+import { AddOrder } from "./../Store/actions";
 
 class BurgerBuilder extends Component {
   state = { show: false };
@@ -14,8 +14,9 @@ class BurgerBuilder extends Component {
     this.setState({ show: true });
   };
   handleValid = () => {
-    this.props.eraseIngredients();
     this.handleCloseModal();
+    this.props.AddOrder();
+    this.props.history.push("/checkout");
   };
   render() {
     return (
@@ -33,7 +34,7 @@ class BurgerBuilder extends Component {
 }
 
 const mapDispatchToProps = dispatch => {
-  return { eraseIngredients: () => dispatch(eraseIngredients()) };
+  return { AddOrder: () => dispatch(AddOrder()) };
 };
 
 export default connect(

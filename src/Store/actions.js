@@ -14,8 +14,8 @@ export const supIngredient = payload => {
   };
 };
 
-export const eraseIngredients = () => {
+export const AddOrder = () => {
   return {
-    type: actions_constants.ERASE_INGREDIENTS
+    type: actions_constants.ADD_ORDER
   };
 };

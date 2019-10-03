@@ -7,11 +7,18 @@ const initialState = {
     Viande: 0,
     Fromage: 0
   },
+  ingredientsPrices: {
+    Salade: 1,
+    Bacon: 2,
+    Viande: 3,
+    Fromage: 1.5
+  },
   orders: []
 };
 
 export const rootReducer = (state = initialState, action) => {
   const ingredients = { ...state.ingredients };
+  const orders = [...state.orders];
   switch (action.type) {
     case actions_constants.ADD_INGREDIENT:
       ingredients[action.payload] = ingredients[action.payload] + 1;
@@ -25,15 +32,19 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         ingredients
       };
-    case actions_constants.ERASE_INGREDIENTS:
+    case actions_constants.ADD_ORDER:
+      const order = [];
+      for (let key in ingredients) {
+        order.push({ ingredient: key, quantity: ingredients[key] });
+      }
+      orders.push(order);
       for (let key in ingredients) {
         ingredients[key] = 0;
       }
-      console.log(ingredients);
-
       return {
         ...state,
-        ingredients
+        ingredients,
+        orders
       };
     default:
       return state;

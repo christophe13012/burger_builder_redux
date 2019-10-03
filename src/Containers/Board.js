@@ -14,10 +14,15 @@ const Board = props => {
       <h1 className="display-4 mt-3 mb-4" style={{ fontSize: 28 }}>
         Composez votre burger
       </h1>
-      {["Viande", "Fromage", "Bacon", "Salade"].map(ingredient => {
+      {Object.keys(props.ingredients).map(ingredient => {
         return (
           <div key={ingredient} className="row  justify-content-center mb-2">
-            <div className="col-2">{ingredient}</div>
+            <div className="col-2">
+              {ingredient}
+              <span className="badge badge-secondary ml-3">
+                {props.ingredientsPrices[ingredient]} €
+              </span>
+            </div>
             <div className="col-3">
               <button
                 onClick={() => props.addIngredient(ingredient)}
@@ -49,7 +54,8 @@ const Board = props => {
 
 const mapStateToProps = state => {
   return {
-    ingredients: state.ingredients
+    ingredients: state.ingredients,
+    ingredientsPrices: state.ingredientsPrices
   };
 };
 

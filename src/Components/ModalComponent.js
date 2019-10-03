@@ -1,11 +1,12 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
 import { connect } from "react-redux";
+import Order from "./Order";
 
 const ModalComponent = props => {
   const ingredients = [];
   for (let key in props.ingredients) {
-    ingredients.push({ name: key, quantity: props.ingredients[key] });
+    ingredients.push({ ingredient: key, quantity: props.ingredients[key] });
   }
   return (
     <Modal show={props.show} onHide={props.close}>
@@ -13,14 +14,10 @@ const ModalComponent = props => {
         <Modal.Title>Votre burger est fini ?</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>Détail des ingredients :</p>
-        {ingredients.map(igd => {
-          return (
-            <p key={igd.name}>
-              {igd.name} : {igd.quantity} pièces
-            </p>
-          );
-        })}
+        <Order
+          ingredients={ingredients}
+          ingredientsPrices={props.ingredientsPrices}
+        />
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={props.close}>
@@ -36,7 +33,8 @@ const ModalComponent = props => {
 
 const mapStateToProps = state => {
   return {
-    ingredients: state.ingredients
+    ingredients: state.ingredients,
+    ingredientsPrices: state.ingredientsPrices
   };
 };
 
