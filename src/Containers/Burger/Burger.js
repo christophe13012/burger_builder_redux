@@ -4,6 +4,12 @@ import "./Burger.css";
 import { connect } from "react-redux";
 
 const Burger = props => {
+  let ingredients = [];
+  for (let key in props.ingredients) {
+    for (let i = 0; i < props.ingredients[key]; i++) {
+      ingredients.push(key);
+    }
+  }
   return (
     <div className="Burger" style={{ marginTop: 35 }}>
       <Ingredients type="BreadTop" />
