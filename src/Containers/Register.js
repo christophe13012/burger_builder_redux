@@ -1,15 +1,17 @@
 import React, { Component } from "react";
 import Joi from "joi";
+import Input from "../Components/Input";
+import axios from "axios";
 
 const schema = {
   email: Joi.string()
     .email({ minDomainAtoms: 2 })
     .required(),
   password: Joi.string()
-    .regex(/^[a-zA-Z0-9]{3,30}$/)
+    .regex(/^[a-zA-Z0-9]{6,30}$/)
     .required(),
   verifPassword: Joi.string()
-    .regex(/^[a-zA-Z0-9]{3,30}$/)
+    .regex(/^[a-zA-Z0-9]{6,30}$/)
     .required()
 };
 
@@ -32,13 +34,26 @@ class Register extends Component {
     }
     this.setState({ loginInfos, errors });
   };
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault();
     if (
       this.state.loginInfos.password === this.state.loginInfos.verifPassword
     ) {
-      console.log("submit ok", this.state.loginInfos);
-      this.setState({ error: null });
+      const authData = {
+        email: this.state.loginInfos.email,
+        password: this.state.loginInfos.password,
+        returnSecureToken: true
+      };
+      console.log(authData);
+      try {
+        const reponse = await axios.post(
+          "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBfWM4xAXaIT7wpWcpU_jPN0OiC4gWoE1w",
+          authData
+        );
+        console.log("submit ok", reponse);
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       this.setState({ error: "Les mots de passe ne sont pas identiques" });
     }
@@ -49,7 +64,7 @@ class Register extends Component {
     if (arr.indexOf("empty") !== -1) error = "Le champs ne doit etre vide";
     if (arr.indexOf("email") !== -1) error = "Votre email n'est pas valide";
     if (arr.indexOf("pattern:") !== -1)
-      error = "Votre mot de passe doit être de 3 à 30 caractères";
+      error = "Votre mot de passe doit être de 6 à 30 caractères";
     return error;
   };
   render() {
@@ -64,54 +79,33 @@ class Register extends Component {
           Veuillez entrer vos informations :
         </h1>
         <form className="col-6">
-          <div className="form-group">
-            <label htmlFor="email">Adresse email</label>
-            <input
-              type="email"
-              className="form-control"
-              id="email"
-              placeholder="Entrer email valide"
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
-            {this.state.errors.email && (
-              <div className="alert alert-danger" role="alert">
-                {this.state.errors.email}
-              </div>
-            )}
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Mot de passe</label>
-            <input
-              type="password"
-              className="form-control"
-              id="password"
-              placeholder="Mot de passe de 3 à 30 caractères"
-              value={this.state.password}
-              onChange={this.handleChange}
-            />
-            {this.state.errors.password && (
-              <div className="alert alert-danger" role="alert">
-                {this.state.errors.password}
-              </div>
-            )}
-          </div>
-          <div className="form-group">
-            <label htmlFor="verifPassword">Ressaisir le mot de passe</label>
-            <input
-              type="password"
-              className="form-control"
-              id="verifPassword"
-              placeholder="Mot de passe de 3 à 30 caractères"
-              value={this.state.verifPassword}
-              onChange={this.handleChange}
-            />
-            {this.state.errors.verifPassword && (
-              <div className="alert alert-danger" role="alert">
-                {this.state.errors.verifPassword}
-              </div>
-            )}
-          </div>
+          <Input
+            placeholder="Entrer email valide"
+            type="email"
+            id="email"
+            value={this.state.email}
+            onChange={this.handleChange}
+            error={this.state.errors.email}
+            label="Email"
+          />
+          <Input
+            placeholder="Mot de passe de 6 à 30 caractères"
+            type="password"
+            id="password"
+            value={this.state.password}
+            onChange={this.handleChange}
+            error={this.state.errors.password}
+            label="Mot de passe"
+          />
+          <Input
+            placeholder="Mot de passe de 6 à 30 caractères"
+            type="password"
+            id="verifPassword"
+            value={this.state.verifPassword}
+            onChange={this.handleChange}
+            error={this.state.errors.verifPassword}
+            label="Confirmation mot de passe"
+          />
           {this.state.error && (
             <div className="alert alert-danger" role="alert">
               {this.state.error}
@@ -123,7 +117,7 @@ class Register extends Component {
             type="submit"
             className="btn btn-primary"
           >
-            S'enregistrer
+            S'inscrire
           </button>
         </form>
       </div>

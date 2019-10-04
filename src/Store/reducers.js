@@ -13,7 +13,8 @@ const initialState = {
     Viande: 3,
     Fromage: 1.5
   },
-  orders: []
+  orders: [],
+  userInfos: null
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -45,6 +46,11 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         ingredients,
         orders
+      };
+    case actions_constants.SAVE_USER_INFOS:
+      return {
+        ...state,
+        userInfos: action.payload
       };
     default:
       return state;

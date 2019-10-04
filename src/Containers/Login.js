@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Joi from "joi";
+import axios from "axios";
 
 const schema = Joi.object().keys({
   email: Joi.string()
@@ -17,11 +18,17 @@ class Login extends Component {
     loginInfos[e.target.type] = e.target.value;
     this.setState({ loginInfos });
   };
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault();
     const result = Joi.validate(this.state.loginInfos, schema);
     if (result.error === null) {
+      const response = await axios.post(
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBfWM4xAXaIT7wpWcpU_jPN0OiC4gWoE1w",
+        this.state.loginInfos
+      );
       console.log("submit ok");
+      localStorage.setItem("token", response.data.idToken);
+      this.props.history.push("/");
       this.setState({ error: null });
     } else {
       this.traduireMessage(result.error.details[0].message);

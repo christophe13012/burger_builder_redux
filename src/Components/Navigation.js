@@ -27,7 +27,7 @@ const Navigation = props => {
             Login
           </Link>
           <Link className="nav-link" to="/register">
-            Register
+            S'inscrire
           </Link>
         </Nav>
       </Navbar.Collapse>

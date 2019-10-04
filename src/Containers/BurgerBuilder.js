@@ -3,10 +3,20 @@ import Burger from "./Burger/Burger";
 import Board from "./Board";
 import ModalComponent from "../Components/ModalComponent";
 import { connect } from "react-redux";
-import { AddOrder } from "./../Store/actions";
+import { AddOrder, saveUserInfos } from "./../Store/actions";
+import axios from "axios";
 
 class BurgerBuilder extends Component {
   state = { show: false };
+  async componentDidMount() {
+    const token = localStorage.getItem("token");
+    if (token !== null) {
+      const response = await axios.get(
+        "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyBfWM4xAXaIT7wpWcpU_jPN0OiC4gWoE1w",
+        token
+      );
+    }
+  }
   handleCloseModal = () => {
     this.setState({ show: false });
   };
@@ -34,7 +44,10 @@ class BurgerBuilder extends Component {
 }
 
 const mapDispatchToProps = dispatch => {
-  return { AddOrder: () => dispatch(AddOrder()) };
+  return {
+    AddOrder: () => dispatch(AddOrder()),
+    saveUserInfos: userInfos => dispatch(saveUserInfos(userInfos))
+  };
 };
 
 export default connect(

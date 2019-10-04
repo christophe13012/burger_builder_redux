@@ -19,3 +19,10 @@ export const AddOrder = () => {
     type: actions_constants.ADD_ORDER
   };
 };
+
+export const saveUserInfos = payload => {
+  return {
+    type: actions_constants.SAVE_USER_INFOS,
+    payload
+  };
+};
