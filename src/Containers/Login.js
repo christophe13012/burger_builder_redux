@@ -22,14 +22,17 @@ class Login extends Component {
     e.preventDefault();
     const result = Joi.validate(this.state.loginInfos, schema);
     if (result.error === null) {
-      const response = await axios.post(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBfWM4xAXaIT7wpWcpU_jPN0OiC4gWoE1w",
-        this.state.loginInfos
-      );
-      console.log("submit ok");
-      localStorage.setItem("token", response.data.idToken);
-      this.props.history.push("/");
-      this.setState({ error: null });
+      try {
+        const response = await axios.post(
+          "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBfWM4xAXaIT7wpWcpU_jPN0OiC4gWoE1w",
+          this.state.loginInfos
+        );
+        localStorage.setItem("token", response.data.idToken);
+        window.location.replace("/burger_builder");
+        this.setState({ error: null });
+      } catch (error) {
+        this.setState({ error: "Email ou mot de passe incorrect" });
+      }
     } else {
       this.traduireMessage(result.error.details[0].message);
     }

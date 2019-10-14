@@ -1,10 +1,31 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Order from "../Components/Order";
 import { NavLink, Link } from "react-router-dom";
+import axios from "axios";
+import OrderItem from "../Components/OrderItem";
 
 class Checkout extends Component {
+  handleOrder = async order => {
+    localStorage.removeItem("ingredients");
+    try {
+      const ordersOjb = {
+        user: this.props.userInfos.email,
+        orders: [...this.props.orders]
+      };
+      const response = await axios.post(
+        "https://burgerredux.firebaseio.com/orders.json",
+        ordersOjb
+      );
+      window.location.replace("/");
+    } catch (error) {}
+  };
+  handleConnect = () => {
+    localStorage.setItem("ingredients", JSON.stringify(this.props.ingredients));
+    this.props.history.replace("/login");
+  };
   render() {
+    console.log(this.props.orders);
+
     let totalPrice = 0;
     this.props.orders.map(order => {
       return order.map(igd => {
@@ -12,6 +33,7 @@ class Checkout extends Component {
           this.props.ingredientsPrices[igd.ingredient] * igd.quantity);
       });
     });
+    const email = this.props.userInfos.email;
     return (
       <div style={{ textAlign: "left", padding: 30 }}>
         {this.props.orders.length === 0 ? (
@@ -31,22 +53,12 @@ class Checkout extends Component {
             <ul className="list-group">
               {this.props.orders.map((order, index) => {
                 return (
-                  <li
+                  <OrderItem
                     key={index}
-                    className="list-group-item list-group-item-dark"
-                  >
-                    <p className="btn btn-primary">
-                      Burger
-                      <span className="badge badge-light ml-2">
-                        {index + 1}
-                      </span>
-                      <span className="sr-only">unread messages</span>
-                    </p>
-                    <Order
-                      ingredients={order}
-                      ingredientsPrices={this.props.ingredientsPrices}
-                    />
-                  </li>
+                    index={index}
+                    order={order}
+                    ingredientsPrices={this.props.ingredientsPrices}
+                  />
                 );
               })}
             </ul>
@@ -57,9 +69,21 @@ class Checkout extends Component {
             <Link to="/" className="btn btn-primary mt-3">
               Ajouter un autre burger
             </Link>
-            <button className="btn btn-success mt-3 ml-3">
-              Valider et procéder au paiement
-            </button>
+            {email === undefined ? (
+              <button
+                className="btn btn-success mt-3 ml-3"
+                onClick={this.handleConnect}
+              >
+                Se connecter pour commander
+              </button>
+            ) : (
+              <button
+                className="btn btn-success mt-3 ml-3"
+                onClick={this.handleOrder}
+              >
+                Valider et procéder au paiement
+              </button>
+            )}
           </React.Fragment>
         )}
       </div>
@@ -70,7 +94,9 @@ class Checkout extends Component {
 const mapStateToProps = state => {
   return {
     orders: state.orders,
-    ingredientsPrices: state.ingredientsPrices
+    ingredientsPrices: state.ingredientsPrices,
+    userInfos: state.userInfos,
+    ingredients: state.ingredients
   };
 };
 

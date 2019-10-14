@@ -4,6 +4,7 @@ import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const Navigation = props => {
+  const token = localStorage.getItem("token");
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Navbar.Brand as={Link} to="/burger_builder">
@@ -23,12 +24,25 @@ const Navigation = props => {
           <Link className="nav-link" to="/checkout">
             Checkout
           </Link>
-          <Link className="nav-link" to="/login">
-            Login
-          </Link>
-          <Link className="nav-link" to="/register">
-            S'inscrire
-          </Link>
+          {token === null ? (
+            <React.Fragment>
+              <Link className="nav-link" to="/login">
+                Login
+              </Link>
+              <Link className="nav-link" to="/register">
+                S'inscrire
+              </Link>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <Link className="nav-link" to="/compte">
+                Mon compte
+              </Link>
+              <Link className="nav-link" to="/deconnection">
+                Se déconnecter
+              </Link>
+            </React.Fragment>
+          )}
         </Nav>
       </Navbar.Collapse>
     </Navbar>

@@ -46,13 +46,15 @@ class Register extends Component {
       };
       console.log(authData);
       try {
-        const reponse = await axios.post(
+        const response = await axios.post(
           "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBfWM4xAXaIT7wpWcpU_jPN0OiC4gWoE1w",
           authData
         );
-        console.log("submit ok", reponse);
+        localStorage.setItem("token", response.data.idToken);
+        window.location.replace("/burger_builder");
       } catch (error) {
         console.log(error);
+        this.setState({ error: "Email déjà utilisé" });
       }
     } else {
       this.setState({ error: "Les mots de passe ne sont pas identiques" });

@@ -2,3 +2,4 @@ export const ADD_INGREDIENT = "ADD_INGREDIENT";
 export const SUP_INGREDIENT = "SUP_INGREDIENT";
 export const ADD_ORDER = "ADD_ORDER";
 export const SAVE_USER_INFOS = "SAVE_USER_INFOS";
+export const POPULATE_ORDERS = "POPULATE_ORDERS";

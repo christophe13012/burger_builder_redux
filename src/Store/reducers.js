@@ -14,13 +14,19 @@ const initialState = {
     Fromage: 1.5
   },
   orders: [],
-  userInfos: null
+  userInfos: []
 };
 
 export const rootReducer = (state = initialState, action) => {
-  const ingredients = { ...state.ingredients };
-  const orders = [...state.orders];
+  let ingredients = { ...state.ingredients };
+  let orders = [...state.orders];
   switch (action.type) {
+    case actions_constants.POPULATE_ORDERS:
+      ingredients = action.payload;
+      return {
+        ...state,
+        ingredients
+      };
     case actions_constants.ADD_INGREDIENT:
       ingredients[action.payload] = ingredients[action.payload] + 1;
       return {
@@ -39,12 +45,8 @@ export const rootReducer = (state = initialState, action) => {
         order.push({ ingredient: key, quantity: ingredients[key] });
       }
       orders.push(order);
-      for (let key in ingredients) {
-        ingredients[key] = 0;
-      }
       return {
         ...state,
-        ingredients,
         orders
       };
     case actions_constants.SAVE_USER_INFOS:

@@ -26,3 +26,10 @@ export const saveUserInfos = payload => {
     payload
   };
 };
+
+export const populateOrders = payload => {
+  return {
+    type: actions_constants.POPULATE_ORDERS,
+    payload
+  };
+};
