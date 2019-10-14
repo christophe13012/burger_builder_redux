@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { NavLink, Link } from "react-router-dom";
 import axios from "axios";
 import OrderItem from "../Components/OrderItem";
+import { toast } from "react-toastify";
 
 class Checkout extends Component {
   handleOrder = async order => {
@@ -16,7 +17,12 @@ class Checkout extends Component {
         "https://burgerredux.firebaseio.com/orders.json",
         ordersOjb
       );
-      window.location.replace("/");
+      toast.success(
+        <div>Simulation Paiement et validation de la commande</div>
+      );
+      setTimeout(() => {
+        window.location.replace("/");
+      }, 4700);
     } catch (error) {}
   };
   handleConnect = () => {

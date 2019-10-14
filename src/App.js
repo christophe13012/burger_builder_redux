@@ -11,6 +11,8 @@ import Deconnection from "./Containers/Deconnection";
 import { saveUserInfos, populateOrders } from "./Store/actions";
 import { connect } from "react-redux";
 import axios from "axios";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 
 class App extends React.Component {
   state = {};
@@ -36,6 +38,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Navigation />
+        <ToastContainer position="top-center" />
         <Switch>
           <Route path="/burger_builder" component={BurgerBuilder} />
           <Route path="/checkout" component={Checkout} />
