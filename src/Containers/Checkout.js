@@ -13,7 +13,7 @@ class Checkout extends Component {
         user: this.props.userInfos.email,
         orders: [...this.props.orders]
       };
-      const response = await axios.post(
+      await axios.post(
         "https://burgerredux.firebaseio.com/orders.json",
         ordersOjb
       );
@@ -47,7 +47,7 @@ class Checkout extends Component {
             <h1 className="display-4 mt-3 mb-4" style={{ fontSize: 28 }}>
               Aucun burger validé
             </h1>
-            <NavLink className="btn btn-primary" to="/burger_builder">
+            <NavLink to="/burger_builder" className="btn btn-primary">
               Construire un burger
             </NavLink>
           </React.Fragment>

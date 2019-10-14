@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "../assets/images/burger-logo.png";
 import { Navbar, Nav } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Navigation = props => {
   const token = localStorage.getItem("token");
@@ -18,29 +18,29 @@ const Navigation = props => {
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
-          <Link className="nav-link" to="/burger_builder">
+          <NavLink className="nav-link" to="/burger_builder">
             Build your burger
-          </Link>
-          <Link className="nav-link" to="/checkout">
+          </NavLink>
+          <NavLink className="nav-link" to="/checkout">
             Checkout
-          </Link>
+          </NavLink>
           {token === null ? (
             <React.Fragment>
-              <Link className="nav-link" to="/login">
+              <NavLink className="nav-link" to="/login">
                 Login
-              </Link>
-              <Link className="nav-link" to="/register">
+              </NavLink>
+              <NavLink className="nav-link" to="/register">
                 S'inscrire
-              </Link>
+              </NavLink>
             </React.Fragment>
           ) : (
             <React.Fragment>
-              <Link className="nav-link" to="/compte">
+              <NavLink className="nav-link" to="/compte">
                 Mon compte
-              </Link>
-              <Link className="nav-link" to="/deconnection">
+              </NavLink>
+              <NavLink className="nav-link" to="/deconnection">
                 Se déconnecter
-              </Link>
+              </NavLink>
             </React.Fragment>
           )}
         </Nav>
