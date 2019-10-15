@@ -22,7 +22,24 @@ export const rootReducer = (state = initialState, action) => {
   let orders = [...state.orders];
   switch (action.type) {
     case actions_constants.POPULATE_ORDERS:
+      orders = action.payload;
+      return {
+        ...state,
+        orders
+      };
+    case actions_constants.POPULATE_INGREDIENTS:
       ingredients = action.payload;
+      return {
+        ...state,
+        ingredients
+      };
+    case actions_constants.ERASE_BURGER:
+      ingredients = {
+        Salade: 0,
+        Bacon: 0,
+        Viande: 0,
+        Fromage: 0
+      };
       return {
         ...state,
         ingredients

@@ -33,3 +33,16 @@ export const populateOrders = payload => {
     payload
   };
 };
+
+export const populateIngredients = payload => {
+  return {
+    type: actions_constants.POPULATE_INGREDIENTS,
+    payload
+  };
+};
+
+export const eraseBurger = () => {
+  return {
+    type: actions_constants.ERASE_BURGER
+  };
+};

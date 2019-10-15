@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import axios from "axios";
 import OrderItem from "../Components/OrderItem";
 import { toast } from "react-toastify";
+import { eraseBurger } from "./../Store/actions";
 
 class Checkout extends Component {
   handleOrder = async order => {
     localStorage.removeItem("ingredients");
+    localStorage.removeItem("orders");
     try {
       const ordersOjb = {
         user: this.props.userInfos.email,
@@ -27,11 +29,15 @@ class Checkout extends Component {
   };
   handleConnect = () => {
     localStorage.setItem("ingredients", JSON.stringify(this.props.ingredients));
+    localStorage.setItem("orders", JSON.stringify(this.props.orders));
     this.props.history.replace("/login");
   };
+  handleRedirect = () => {
+    localStorage.removeItem("ingredients");
+    this.props.eraseBurger();
+    this.props.history.replace("/");
+  };
   render() {
-    console.log(this.props.orders);
-
     let totalPrice = 0;
     this.props.orders.map(order => {
       return order.map(igd => {
@@ -72,9 +78,12 @@ class Checkout extends Component {
               Montant de la commande :
               <span className="badge badge-secondary ml-3">{totalPrice} €</span>
             </p>
-            <Link to="/" className="btn btn-primary mt-3">
+            <button
+              className="btn btn-primary mt-3"
+              onClick={this.handleRedirect}
+            >
               Ajouter un autre burger
-            </Link>
+            </button>
             {email === undefined ? (
               <button
                 className="btn btn-success mt-3 ml-3"
@@ -106,4 +115,13 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Checkout);
+const mapDispatchToProps = dispatch => {
+  return {
+    eraseBurger: () => dispatch(eraseBurger())
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Checkout);

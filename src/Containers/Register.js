@@ -44,7 +44,6 @@ class Register extends Component {
         password: this.state.loginInfos.password,
         returnSecureToken: true
       };
-      console.log(authData);
       try {
         const response = await axios.post(
           "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBfWM4xAXaIT7wpWcpU_jPN0OiC4gWoE1w",
@@ -53,7 +52,6 @@ class Register extends Component {
         localStorage.setItem("token", response.data.idToken);
         window.location.replace("/burger_builder");
       } catch (error) {
-        console.log(error);
         this.setState({ error: "Email déjà utilisé" });
       }
     } else {

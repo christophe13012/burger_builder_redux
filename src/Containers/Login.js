@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Joi from "joi";
 import axios from "axios";
+import Input from "../Components/Input";
 
 const schema = Joi.object().keys({
   email: Joi.string()
@@ -28,7 +29,8 @@ class Login extends Component {
           this.state.loginInfos
         );
         localStorage.setItem("token", response.data.idToken);
-        window.location.replace("/burger_builder");
+        window.location.replace("/checkout");
+
         this.setState({ error: null });
       } catch (error) {
         this.setState({ error: "Email ou mot de passe incorrect" });
@@ -40,8 +42,6 @@ class Login extends Component {
   traduireMessage = message => {
     let error;
     const arr = message.split(" ");
-    console.log(arr);
-
     if (arr.indexOf("empty") !== -1)
       error = "Aucun des champs ne doit etre vide";
     if (arr.indexOf("email") !== -1) error = "Votre email n'est pas valide";
@@ -50,34 +50,32 @@ class Login extends Component {
     this.setState({ error });
   };
   render() {
+    console.log(this.props.history);
+
     return (
       <div style={{ textAlign: "left", padding: 30 }}>
         <h1 className="display-4 mt-3 mb-4" style={{ fontSize: 28 }}>
           Veuillez entrer vos informations :
         </h1>
         <form className="col-6">
-          <div className="form-group">
-            <label htmlFor="email">Adresse email</label>
-            <input
-              type="email"
-              className="form-control"
-              id="email"
-              placeholder="Entrer email"
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Mot de passe</label>
-            <input
-              type="password"
-              className="form-control"
-              id="password"
-              placeholder="Password"
-              value={this.state.password}
-              onChange={this.handleChange}
-            />
-          </div>
+          <Input
+            placeholder="Entrer email"
+            type="email"
+            id="email"
+            value={this.state.email}
+            onChange={this.handleChange}
+            error={null}
+            label="Adresse email"
+          />
+          <Input
+            placeholder="Entrez votre mot de passe"
+            type="password"
+            id="password"
+            value={this.state.password}
+            onChange={this.handleChange}
+            error={null}
+            label="Mot de passe"
+          />
           {this.state.error && (
             <div className="alert alert-danger" role="alert">
               {this.state.error}

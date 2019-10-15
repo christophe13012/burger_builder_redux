@@ -8,7 +8,11 @@ import Login from "./Containers/Login";
 import Register from "./Containers/Register";
 import Account from "./Containers/Account";
 import Deconnection from "./Containers/Deconnection";
-import { saveUserInfos, populateOrders } from "./Store/actions";
+import {
+  saveUserInfos,
+  populateOrders,
+  populateIngredients
+} from "./Store/actions";
 import { connect } from "react-redux";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
@@ -31,7 +35,12 @@ class App extends React.Component {
       }
     }
     if (localStorage.ingredients !== undefined) {
-      this.props.populateOrders(JSON.parse(localStorage.ingredients));
+      console.log("test");
+
+      this.props.populateIngredients(JSON.parse(localStorage.ingredients));
+    }
+    if (localStorage.orders !== undefined) {
+      this.props.populateOrders(JSON.parse(localStorage.orders));
     }
   }
   render() {
@@ -56,7 +65,9 @@ class App extends React.Component {
 const mapDispatchToProps = dispatch => {
   return {
     saveUserInfos: userInfos => dispatch(saveUserInfos(userInfos)),
-    populateOrders: ingredients => dispatch(populateOrders(ingredients))
+    populateOrders: orders => dispatch(populateOrders(orders)),
+    populateIngredients: ingredients =>
+      dispatch(populateIngredients(ingredients))
   };
 };
 
