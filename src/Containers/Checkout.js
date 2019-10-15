@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import axios from "axios";
 import OrderItem from "../Components/OrderItem";
 import { toast } from "react-toastify";
-import { eraseBurger } from "./../Store/actions";
+import { eraseBurger, deleteOrder } from "./../Store/actions";
 
 class Checkout extends Component {
   handleOrder = async order => {
@@ -36,6 +36,9 @@ class Checkout extends Component {
     localStorage.removeItem("ingredients");
     this.props.eraseBurger();
     this.props.history.replace("/");
+  };
+  handleDeleteOrder = index => {
+    this.props.deleteOrder(index);
   };
   render() {
     let totalPrice = 0;
@@ -70,6 +73,8 @@ class Checkout extends Component {
                     index={index}
                     order={order}
                     ingredientsPrices={this.props.ingredientsPrices}
+                    showDelete
+                    onDeleteOrder={this.handleDeleteOrder}
                   />
                 );
               })}
@@ -117,7 +122,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    eraseBurger: () => dispatch(eraseBurger())
+    eraseBurger: () => dispatch(eraseBurger()),
+    deleteOrder: payload => dispatch(deleteOrder(payload))
   };
 };
 

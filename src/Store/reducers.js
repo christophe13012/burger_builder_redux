@@ -66,6 +66,12 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         orders
       };
+    case actions_constants.DELETE_ORDER:
+      orders.splice(action.payload, 1);
+      return {
+        ...state,
+        orders
+      };
     case actions_constants.SAVE_USER_INFOS:
       return {
         ...state,

@@ -46,3 +46,10 @@ export const eraseBurger = () => {
     type: actions_constants.ERASE_BURGER
   };
 };
+
+export const deleteOrder = payload => {
+  return {
+    type: actions_constants.DELETE_ORDER,
+    payload
+  };
+};
