@@ -17,26 +17,31 @@ const Board = props => {
       {Object.keys(props.ingredients).map(ingredient => {
         return (
           <div key={ingredient} className="row  justify-content-center mb-2">
-            <div className="col-2">
-              {ingredient}
-              <span className="badge badge-secondary ml-3">
-                {props.ingredientsPrices[ingredient]} €
-              </span>
+            <div className="col-6">
+              <p className="float-right">
+                {" "}
+                {ingredient}{" "}
+                <span className="badge badge-secondary ml-3">
+                  {props.ingredientsPrices[ingredient]} €
+                </span>
+              </p>
             </div>
-            <div className="col-3">
-              <button
-                onClick={() => props.addIngredient(ingredient)}
-                className="btn btn-sm btn-success ml-2"
-              >
-                Ajouter
-              </button>
-              <button
-                disabled={props.ingredients[ingredient] < 1 ? true : false}
-                onClick={() => props.supIngredient(ingredient)}
-                className="btn btn-sm btn-danger ml-2"
-              >
-                Supprimer
-              </button>
+            <div className="col-6">
+              <p className="float-left">
+                <button
+                  onClick={() => props.addIngredient(ingredient)}
+                  className="btn btn-sm btn-success"
+                >
+                  Ajouter
+                </button>
+                <button
+                  disabled={props.ingredients[ingredient] < 1 ? true : false}
+                  onClick={() => props.supIngredient(ingredient)}
+                  className="btn btn-sm btn-danger ml-2"
+                >
+                  Supprimer
+                </button>
+              </p>
             </div>
           </div>
         );
