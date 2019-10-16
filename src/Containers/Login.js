@@ -29,7 +29,7 @@ class Login extends Component {
           this.state.loginInfos
         );
         localStorage.setItem("token", response.data.idToken);
-        window.location.replace("/checkout");
+        window.location.replace("/#/checkout");
 
         this.setState({ error: null });
       } catch (error) {
