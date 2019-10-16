@@ -5,7 +5,7 @@ class Deconnection extends Component {
     localStorage.clear();
     setTimeout(() => {
       window.location.replace(
-        "https://christophe13012.github.io/burger_builder_redux/#/burger_builder"
+        "https://christophe13012.github.io/burger_builder_redux"
       );
     }, 1500);
 

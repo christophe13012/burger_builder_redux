@@ -24,7 +24,7 @@ class Checkout extends Component {
       );
       setTimeout(() => {
         window.location.replace(
-          "https://christophe13012.github.io/burger_builder_redux/#/burger_builder"
+          "https://christophe13012.github.io/burger_builder_redux"
         );
       }, 4700);
     } catch (error) {}

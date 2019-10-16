@@ -51,7 +51,7 @@ class Register extends Component {
         );
         localStorage.setItem("token", response.data.idToken);
         window.location.replace(
-          "https://christophe13012.github.io/burger_builder_redux/#/burger_builder"
+          "https://christophe13012.github.io/burger_builder_redux"
         );
       } catch (error) {
         this.setState({ error: "Email déjà utilisé" });

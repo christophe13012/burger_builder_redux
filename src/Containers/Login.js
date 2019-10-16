@@ -30,7 +30,7 @@ class Login extends Component {
         );
         localStorage.setItem("token", response.data.idToken);
         window.location.replace(
-          "https://christophe13012.github.io/burger_builder_redux/#/checkout"
+          "https://christophe13012.github.io/burger_builder_redux"
         );
 
         this.setState({ error: null });
