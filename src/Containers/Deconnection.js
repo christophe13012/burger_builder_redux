@@ -4,7 +4,9 @@ class Deconnection extends Component {
   componentDidMount() {
     localStorage.clear();
     setTimeout(() => {
-      window.location.replace("/");
+      window.location.replace(
+        "https://christophe13012.github.io/burger_builder_redux/#/burger_builder"
+      );
     }, 1500);
 
     console.log("token supprimé");

@@ -23,7 +23,9 @@ class Checkout extends Component {
         <div>Simulation Paiement et validation de la commande</div>
       );
       setTimeout(() => {
-        window.location.replace("/");
+        window.location.replace(
+          "https://christophe13012.github.io/burger_builder_redux/#/burger_builder"
+        );
       }, 4700);
     } catch (error) {}
   };

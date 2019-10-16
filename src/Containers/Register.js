@@ -50,7 +50,9 @@ class Register extends Component {
           authData
         );
         localStorage.setItem("token", response.data.idToken);
-        window.location.replace("/#/burger_builder");
+        window.location.replace(
+          "https://christophe13012.github.io/burger_builder_redux/#/burger_builder"
+        );
       } catch (error) {
         this.setState({ error: "Email déjà utilisé" });
       }
